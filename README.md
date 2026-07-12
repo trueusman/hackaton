@@ -2,6 +2,12 @@
 
 **AI-Powered QR Maintenance & Asset History Platform** — *Scan. Report. Diagnose. Maintain.*
 
+## 🚀 Quick Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/trueusman/hackaton&project-name=maintainiq&root-directory=client&env=VITE_API_URL)
+
+**⚠️ Important:** Set Root Directory to `client` during deployment!
+
 Built for the SMIT Final Hackathon (Track A — Advanced Full-Stack + GenAI). A MERN application that gives every
 physical asset a digital identity, a QR-accessible public page, an AI-assisted issue-reporting workflow, controlled
 maintenance status transitions, and a permanent audit history.
