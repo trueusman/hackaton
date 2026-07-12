@@ -1,0 +1,57 @@
+🚀 QUICK DEPLOY LINKS - MaintainIQ
+
+═══════════════════════════════════════════════════════════════
+
+📦 DEPLOY FRONTEND TO VERCEL (1-Click):
+════════════════════════════════════════════════════════════
+
+Copy and paste this URL in your browser:
+
+https://vercel.com/new/clone?repository-url=https://github.com/trueusman/hackaton&project-name=maintainiq&repository-name=hackaton&root-directory=client
+
+OR
+
+Go to: https://vercel.com/usman-pros-projects
+Click: "Add New" → "Project" → "Import" → Select "trueusman/hackaton"
+
+IMPORTANT SETTINGS:
+✅ Root Directory: client
+✅ Framework: Vite (auto-detected)
+✅ Build Command: npm run build
+✅ Output Directory: dist
+
+Environment Variable:
+VITE_API_URL = https://2026-hacaton.onrender.com/api
+
+═══════════════════════════════════════════════════════════════
+
+🖥️ DEPLOY BACKEND TO RENDER:
+════════════════════════════════════════════════════════════
+
+Go to: https://render.com/deploy
+
+Connect GitHub: trueusman/hackaton
+
+Settings:
+✅ Root Directory: server
+✅ Build Command: npm install
+✅ Start Command: node src/server.js
+
+Required Environment Variables (see DEPLOY_NOW.md for details):
+- MONGO_URI
+- JWT_SECRET
+- JWT_REFRESH_SECRET
+- GEMINI_API_KEY
+- CLOUDINARY credentials
+- CLIENT_URL
+- PUBLIC_APP_URL
+
+═══════════════════════════════════════════════════════════════
+
+📚 COMPLETE GUIDE:
+See DEPLOY_NOW.md file for detailed step-by-step instructions
+
+🔗 GITHUB REPO:
+https://github.com/trueusman/hackaton
+
+═══════════════════════════════════════════════════════════════
