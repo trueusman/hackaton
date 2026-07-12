@@ -1,0 +1,319 @@
+{
+  "info": {
+    "name": "MaintainIQ API",
+    "description": "AI-Powered QR Maintenance & Asset History Platform - SMIT Hackathon Track A",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "accessToken", "value": "" },
+    { "key": "assetId", "value": "" },
+    { "key": "assetCode", "value": "" },
+    { "key": "issueId", "value": "" },
+    { "key": "issueNumber", "value": "" },
+    { "key": "technicianId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register (reporter)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Reporter\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"Password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login (admin demo)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@maintainiq.dev\",\n  \"password\": \"Admin@12345\"\n}"
+            }
+          }
+        },
+        { "name": "Refresh token", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" } },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create staff user (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Technician\",\n  \"email\": \"newtech@maintainiq.dev\",\n  \"password\": \"Password123\",\n  \"role\": \"technician\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List technicians",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/users/technicians"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "item": [
+        {
+          "name": "Create asset (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/assets",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Classroom Projector 01\",\n  \"category\": \"Electronics\",\n  \"location\": \"Block A - Room 101\",\n  \"condition\": \"Good\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List assets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/assets?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Get asset by id",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/assets/{{assetId}}"
+          }
+        },
+        {
+          "name": "Get public asset by code",
+          "request": { "method": "GET", "url": "{{baseUrl}}/assets/public/{{assetCode}}" }
+        },
+        {
+          "name": "Get asset QR",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/assets/{{assetId}}/qr"
+          }
+        },
+        {
+          "name": "Get asset history",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/assets/{{assetId}}/history"
+          }
+        },
+        {
+          "name": "Retire asset (admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/assets/{{assetId}}/retire"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Issues",
+      "item": [
+        {
+          "name": "AI triage preview (public)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/issues/ai-triage",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetCode\": \"{{assetCode}}\",\n  \"complaint\": \"The AC is leaking water, making unusual noise, and cooling is weak.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Report issue (public, multipart)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/issues",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "assetCode", "value": "{{assetCode}}", "type": "text" },
+                { "key": "title", "value": "AC leaking water", "type": "text" },
+                { "key": "description", "value": "Water leakage under the unit, unusual noise, weak cooling.", "type": "text" },
+                { "key": "priority", "value": "High", "type": "text" },
+                { "key": "reporterName", "value": "Ali Student", "type": "text" },
+                { "key": "evidence", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Public issue status",
+          "request": { "method": "GET", "url": "{{baseUrl}}/issues/public/{{issueNumber}}" }
+        },
+        {
+          "name": "List issues",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/issues?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Get issue by id",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/issues/{{issueId}}"
+          }
+        },
+        {
+          "name": "Assign issue (admin/supervisor)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/issues/{{issueId}}/assign",
+            "body": { "mode": "raw", "raw": "{\n  \"technicianId\": \"{{technicianId}}\"\n}" }
+          }
+        },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/issues/{{issueId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"Inspection Started\"\n}" }
+          }
+        },
+        {
+          "name": "Resolve issue",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/issues/{{issueId}}/resolve",
+            "body": { "mode": "raw", "raw": "{\n  \"resolutionSummary\": \"Cleared blocked drain pipe, leak stopped.\"\n}" }
+          }
+        },
+        {
+          "name": "Close issue (admin/supervisor)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/issues/{{issueId}}/close"
+          }
+        },
+        {
+          "name": "Reopen issue (admin/supervisor)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/issues/{{issueId}}/reopen",
+            "body": { "mode": "raw", "raw": "{\n  \"reason\": \"Problem recurred\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Maintenance",
+      "item": [
+        {
+          "name": "Create maintenance record",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/maintenance/issues/{{issueId}}",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "workPerformed", "value": "Cleared blocked drain pipe", "type": "text" },
+                { "key": "totalCost", "value": "25", "type": "text" },
+                { "key": "completionDate", "value": "2026-07-12", "type": "text" },
+                { "key": "nextServiceDate", "value": "2026-10-12", "type": "text" },
+                { "key": "evidence", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List records for issue",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/maintenance/issues/{{issueId}}"
+          }
+        },
+        {
+          "name": "List records for asset",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/maintenance/assets/{{assetId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/dashboard/summary"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+# Local dev parity only - the actual hackathon deploy targets are
+# Vercel (client) + Render (server) + MongoDB Atlas, per ARCHITECTURE.md.
+# This compose file is for running the whole stack on a laptop with Docker.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  server:
+    build: ./server
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/maintainiq
+      JWT_ACCESS_SECRET: dev_access_secret_change_me
+      JWT_REFRESH_SECRET: dev_refresh_secret_change_me
+      CLIENT_URL: http://localhost:5173
+      PUBLIC_APP_URL: http://localhost:5173
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      - mongo
+
+  client:
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://localhost:5000/api
+    restart: unless-stopped
+    ports:
+      - '4173:4173'
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:

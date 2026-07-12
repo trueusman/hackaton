@@ -1,0 +1,64 @@
+const ISSUE_STATUS = Object.freeze({
+  REPORTED: 'Reported',
+  ASSIGNED: 'Assigned',
+  INSPECTION_STARTED: 'Inspection Started',
+  MAINTENANCE_IN_PROGRESS: 'Maintenance In Progress',
+  WAITING_FOR_PARTS: 'Waiting for Parts',
+  RESOLVED: 'Resolved',
+  CLOSED: 'Closed',
+  REOPENED: 'Reopened',
+});
+
+const ALL_ISSUE_STATUSES = Object.values(ISSUE_STATUS);
+
+// Explicit adjacency map - the single source of truth for valid workflow moves.
+// Enforced in issueService, never trusted from the client.
+const ISSUE_STATUS_TRANSITIONS = Object.freeze({
+  [ISSUE_STATUS.REPORTED]: [ISSUE_STATUS.ASSIGNED],
+  [ISSUE_STATUS.ASSIGNED]: [ISSUE_STATUS.INSPECTION_STARTED, ISSUE_STATUS.REPORTED],
+  [ISSUE_STATUS.INSPECTION_STARTED]: [
+    ISSUE_STATUS.MAINTENANCE_IN_PROGRESS,
+    ISSUE_STATUS.WAITING_FOR_PARTS,
+    ISSUE_STATUS.RESOLVED,
+  ],
+  [ISSUE_STATUS.MAINTENANCE_IN_PROGRESS]: [
+    ISSUE_STATUS.WAITING_FOR_PARTS,
+    ISSUE_STATUS.RESOLVED,
+  ],
+  [ISSUE_STATUS.WAITING_FOR_PARTS]: [
+    ISSUE_STATUS.MAINTENANCE_IN_PROGRESS,
+    ISSUE_STATUS.RESOLVED,
+  ],
+  [ISSUE_STATUS.RESOLVED]: [ISSUE_STATUS.CLOSED, ISSUE_STATUS.REOPENED],
+  [ISSUE_STATUS.CLOSED]: [ISSUE_STATUS.REOPENED],
+  [ISSUE_STATUS.REOPENED]: [ISSUE_STATUS.ASSIGNED, ISSUE_STATUS.INSPECTION_STARTED],
+});
+
+// Statuses that map an issue's underlying asset back towards Operational/etc.
+const ISSUE_TO_ASSET_STATUS = Object.freeze({
+  [ISSUE_STATUS.REPORTED]: 'Issue Reported',
+  [ISSUE_STATUS.ASSIGNED]: 'Issue Reported',
+  [ISSUE_STATUS.INSPECTION_STARTED]: 'Under Inspection',
+  [ISSUE_STATUS.MAINTENANCE_IN_PROGRESS]: 'Under Maintenance',
+  [ISSUE_STATUS.WAITING_FOR_PARTS]: 'Under Maintenance',
+  [ISSUE_STATUS.RESOLVED]: 'Operational',
+  [ISSUE_STATUS.REOPENED]: 'Issue Reported',
+});
+
+const PRIORITY = Object.freeze({
+  LOW: 'Low',
+  MEDIUM: 'Medium',
+  HIGH: 'High',
+  CRITICAL: 'Critical',
+});
+
+const ALL_PRIORITIES = Object.values(PRIORITY);
+
+module.exports = {
+  ISSUE_STATUS,
+  ALL_ISSUE_STATUSES,
+  ISSUE_STATUS_TRANSITIONS,
+  ISSUE_TO_ASSET_STATUS,
+  PRIORITY,
+  ALL_PRIORITIES,
+};
