@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "maintainiq",
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/client/dist/$1"
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "https://2026-hacaton.onrender.com/api"
+  }
+}
