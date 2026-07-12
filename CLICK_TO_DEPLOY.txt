@@ -1,0 +1,81 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║              🚀 ONE-CLICK VERCEL DEPLOYMENT 🚀                 ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+📌 DEPLOYMENT LINK - Copy Paste in Browser:
+═══════════════════════════════════════════════════════════════
+
+https://vercel.com/new/clone?repository-url=https://github.com/trueusman/hackaton&project-name=maintainiq&root-directory=client&env=VITE_API_URL
+
+═══════════════════════════════════════════════════════════════
+
+YE LINK AUTOMATICALLY:
+✅ Repository import karega
+✅ Root directory "client" set karega
+✅ Framework "Vite" detect karega
+✅ Environment variable add karne ka option dega
+
+BAS:
+1. Link open karein
+2. Vercel login karein (agar nahi kiya to)
+3. "Deploy" button pe click karein
+4. Done! 🎉
+
+═══════════════════════════════════════════════════════════════
+
+📌 ALTERNATIVE METHOD - Manual Import:
+═══════════════════════════════════════════════════════════════
+
+Agar upar wala link kaam na kare to:
+
+Step 1: https://vercel.com/usman-pros-projects
+Step 2: "Add New" → "Project"
+Step 3: Import "trueusman/hackaton"
+Step 4: Root Directory: "client" ⚠️ ZAROOR SET KAREIN
+Step 5: Deploy!
+
+═══════════════════════════════════════════════════════════════
+
+🎯 IMPORTANT SETTINGS:
+═══════════════════════════════════════════════════════════════
+
+Root Directory:    client
+Framework:         Vite
+Build Command:     npm run build
+Output Directory:  dist
+
+Environment Variable (optional):
+VITE_API_URL = https://2026-hacaton.onrender.com/api
+
+═══════════════════════════════════════════════════════════════
+
+📖 DETAILED GUIDE:
+═══════════════════════════════════════════════════════════════
+
+Complete step-by-step guide dekhen:
+→ DEPLOY_STEPS.md file
+
+═══════════════════════════════════════════════════════════════
+
+🎊 AFTER DEPLOYMENT:
+═══════════════════════════════════════════════════════════════
+
+Aapko milega:
+✨ Live URL: https://maintainiq-xyz.vercel.app
+✨ Auto-deploy on every git push
+✨ Preview URLs for branches
+✨ Analytics dashboard
+
+═══════════════════════════════════════════════════════════════
+
+💡 QUICK TIP:
+═══════════════════════════════════════════════════════════════
+
+Deployment 2-3 minutes mein complete hoga.
+Agar koi error aaye to check karein:
+- Root Directory "client" hai ya nahi
+- GitHub account Vercel se connected hai ya nahi
+
+═══════════════════════════════════════════════════════════════
